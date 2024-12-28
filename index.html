@@ -21,6 +21,11 @@
       </div>
 
   <script>
+    const isPrefersColorSupportted = () => {
+      const pcsDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+      const pcsLight = window.matchMedia("(prefers-color-scheme: light)").matches
+      return pcsDark != pcsLight
+    }
 
     const pressedButtonSelector = '[data-theme][aria-pressed="true"]';
     const prefersColorMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -50,7 +55,9 @@
     }
     
     const setDefaultTheme = () => {
-      themes.default = (prefersColorMediaQuery.matches === true) ? themes.dark : themes.light
+      if (isPrefersColorSupportted() === true) {
+        themes.default = (prefersColorMediaQuery.matches === true) ? themes.dark : themes.light
+      }
     }
 
     const applyInitialTheme = () => {
